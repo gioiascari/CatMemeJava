@@ -1,4 +1,3 @@
-import javax.sound.*;
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
@@ -6,18 +5,27 @@ import java.io.IOException;
 public class Music {
     private Clip clip;
 
-    public static void load(String filePath) throws Exception {
-        new Thread(() ->{
-            try {
-            File fa = new File(filePath);
-            AudioInputStream as = AudioSystem.getAudioInputStream(new File(filePath));
-            Clip clip = AudioSystem.getClip();
+    public boolean load(String filePath) {
+        try {
+            File af = new File(filePath);
+            AudioInputStream as = AudioSystem.getAudioInputStream(af);
+            clip = AudioSystem.getClip();
             clip.open(as);
-            clip.start();
+            return true;
             } catch (Exception e) {
                 throw new RuntimeException(e);
+        }
 
+    }
+
+    public static void playASY(String filePath) throws Exception {
+
+        new Thread(() -> {
+            Music m = new Music();
+            if(m.load(filePath)) {
+                m.play();
             }
+
         }).start();
     }
 
@@ -25,7 +33,7 @@ public class Music {
         if(clip!=null){
             clip.start();
         }else{
-            System.out.println("No clip loaded");
+            System.out.println("Bad clip request");
         }
     }
     public void stop() {
