@@ -15,4 +15,5 @@ public class VideoAscii {
         this.beta = beta;
         this.gamma = gamma;
     }
+
 }
