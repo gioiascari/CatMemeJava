@@ -31,11 +31,27 @@ public class AsciiVideo {
         }
         //Oggetto Mat definito su classe AsciiRenderer
         Mat mat = new Mat();
+        AsciiRenderer ar = new AsciiRenderer(width, height, alpha, beta, gamma, micio);
 
         while(vc.read(mat)){
-
-
+            String[] asciiFrame = ar.convertMatToAscii(mat);
+            printFrame(asciiFrame);
+            sleep(40);//testing
         }
+        vc.release();
+    }
+
+    private void printFrame(String[] asciiFrame){
+        System.out.println("\033[H\033[2J");//questo pulisce il terminale ;)
+        for(String line : asciiFrame){
+            System.out.println(line);
+        }
+    }
+
+    private void sleep(long millis){
+        try{
+            Thread.sleep(millis);
+        }catch(InterruptedException e){}
     }
 
 }
