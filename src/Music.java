@@ -8,7 +8,9 @@ public class Music {
     public boolean load(String filePath) {
         try {
             File af = new File(filePath);
+
             AudioInputStream as = AudioSystem.getAudioInputStream(af);
+
             clip = AudioSystem.getClip();
             clip.open(as);
             return true;
